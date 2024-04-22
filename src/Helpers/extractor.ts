@@ -97,6 +97,7 @@ export const extractCourseData = (dataString: string) => {
             program: program,
             name: values[3],
             description: extractDescription(values[4]),
+            imageUrl: values[12].slice(1, -1),
             totalVacancies: parseInt(values[5]),
             occuppiedVacancies: parseInt(values[6]),
             startDate: values[7],
