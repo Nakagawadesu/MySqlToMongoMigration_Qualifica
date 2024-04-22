@@ -9,6 +9,7 @@ export interface CourseMigration {
   program: string;
   name: string;
   description: string;
+  imageUrl: string;
   totalVacancies: number;
   occuppiedVacancies: number;
   startDate: string;
@@ -38,10 +39,10 @@ export interface UserMigration {
 export interface CourseType {
   _id?: ObjectId;
   courseBeforeMigration: boolean;
-  tag: string;
+  tag: ObjectId;
   name: string;
   description: string;
-  imageUrl?: string;
+  imageUrl: string;
   open: boolean;
   program: ObjectId | null;
   disabledAt: Date | null;
