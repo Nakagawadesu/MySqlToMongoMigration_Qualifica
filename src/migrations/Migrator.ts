@@ -149,10 +149,12 @@ class Migrator {
         session.endSession();
       }
       log.success(`Programs migrated successfully`);
-      res.status(200).json({ message: "Programs migrated successfully" });
+      return res
+        .status(200)
+        .json({ message: "Programs migrated successfully" });
     } catch (error) {
       log.error(`Error migrating programs`, error);
-      res.status(500).json({ message: "Error migrating programs" });
+      return res.status(500).json({ message: "Error migrating programs" });
     }
   };
   public migrateUsers = async (
@@ -206,14 +208,16 @@ class Migrator {
             writeConcern: { w: "majority" },
           }
         );
+      } catch (err) {
+        log.error(`Error migrating users`, err);
       } finally {
         session.endSession();
       }
       log.success(`Users migrated successfully`);
-      res.status(200).json({ message: "Users migrated successfully" });
+      return res.status(200).json({ message: "Users migrated successfully" });
     } catch (error) {
       log.error(`Error migrating users`, error);
-      res.status(500).json({ message: "Error migrating users" });
+      return res.status(500).json({ message: "Error migrating users" });
     }
   };
   public migrateCourses = async (
@@ -265,13 +269,13 @@ class Migrator {
                   .toISOString();
                 const insertedCourse: CourseType = {
                   courseBeforeMigration: true,
-                  tag: new ObjectId("6626547a00c9eb392eae02b7"),
+                  tag: new ObjectId("66267c604b55e70e1d052979"),
                   name: course.name.slice(1, -1),
-                  description: course.description
-                    .replace(/\\n/g, "")
-                    .replace(/\\r/g, "")
-                    .replace(/\\/g, "")
-                    .replace(/"/g, ""),
+                  description: course.description,
+                  // .replace(/\\n/g, "")
+                  // .replace(/\\r/g, "")
+                  // .replace(/\\/g, "")
+                  // .replace(/"/g, ""),
                   imageUrl: course.imageUrl,
                   disabledAt: null,
                   open: false,
@@ -313,10 +317,10 @@ class Migrator {
         session.endSession();
       }
       log.success(`Courses migrated successfully`);
-      res.status(200).json({ message: "Courses migrated successfully" });
+      return res.status(200).json({ message: "Courses migrated successfully" });
     } catch (error) {
       log.error(`Error migrating courses`, error);
-      res.status(500).json({ message: "Error migrating courses" });
+      return res.status(500).json({ message: "Error migrating courses" });
     }
   };
 }
