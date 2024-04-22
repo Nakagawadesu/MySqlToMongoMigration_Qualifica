@@ -265,11 +265,16 @@ class Migrator {
                   .toISOString();
                 const insertedCourse: CourseType = {
                   courseBeforeMigration: true,
-                  tag: "none",
+                  tag: new ObjectId("6626547a00c9eb392eae02b7"),
                   name: course.name.slice(1, -1),
-                  description: course.description,
+                  description: course.description
+                    .replace(/\\n/g, "")
+                    .replace(/\\r/g, "")
+                    .replace(/\\/g, "")
+                    .replace(/"/g, ""),
+                  imageUrl: course.imageUrl,
                   disabledAt: null,
-                  open: true,
+                  open: false,
                   program: program ? program._id : null,
                   vacancies: {
                     total: course.totalVacancies,
